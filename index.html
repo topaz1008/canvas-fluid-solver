@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>HTML5 Canvas Fluid Simulation</title>
+    <style>
+        body { margin: 0; background: #000; color: #fff; }
+        a, a:active, a:visited { color: #666 ; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .container { padding-left: 15px; padding-top: 0; }
+        #main { border: 1px solid #fff; cursor: default; margin: 50px auto auto auto; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>A Simple fluid simulation</h2>
+    <p>Based on Jos Stam's paper <a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf" target="_blank">Real-Time Fluid Dynamics for Games</a>.</p>
+    <p>Simulates the <a href="http://en.wikipedia.org/wiki/Navier-Stokes_equations" target="_blank">Navier-Stokes equations</a> for incompressible fluids.</p>
+    <p>Move the mouse over the canvas to move the fluid, click and drag to add density (touch and drag on mobile).</p>
+</div>
+
+<canvas id="main"></canvas>
+
+<div id="gui-container"><!-- dat.GUI container when viewing in mobile --></div>
+
+<script src="vendors/dat.gui.min.js"></script>
+<script src="src/fluidsolver.js"></script>
+<script src="src/main.js"></script>
+
+</body>
+</html>
