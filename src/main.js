@@ -20,11 +20,11 @@
     }
 
     // setInterval still seems to be faster than this most of the time.
-    //window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
-    //    window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+        window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
-    //requestAnimationFrame(update);
-    setInterval(update, 1000 / FPS);
+    requestAnimationFrame(update);
+//    setInterval(update, 1000 / FPS);
 
     var CELL_SIZE = VIEW_SIZE / NUM_OF_CELLS,  // Size of each cell in pixels
         CELL_SIZE_CEIL = Math.ceil(CELL_SIZE); // Size of each cell in pixels (ceiling)
@@ -69,7 +69,7 @@
         drawVelocityField: false,
         drawDensityField: true,
         drawParticles: true,
-        blackAndWhite: false,
+        grayscale: false,
         resetParticles: function () { particles.length = 0; }
     };
 
@@ -86,7 +86,7 @@
     gui.add(fs, 'doVorticityConfinement').name('Vorticity Confinement');
     gui.add(fs, 'doBuoyancy').name('Buoyancy');
 
-    gui.add(options, 'blackAndWhite').name('Black & White');
+    gui.add(options, 'grayscale').name('Grayscale');
     gui.add(options, 'drawVelocityField').name('Draw Velocity Field');
     gui.add(options, 'drawDensityField').name('Draw Density Field');
     gui.add(options, 'drawParticles').name('Draw Particle Effect');
@@ -293,8 +293,8 @@
                     //if (color > 255) color = 255;
 
                     r = color;
-                    g = color * dx * invMaxColor;
-                    b = color * dy * invMaxColor;
+                    g = ((options.grayscale) ? color : color * dx * invMaxColor);
+                    b = ((options.grayscale) ? color : color * dy * invMaxColor);
 
                     // Draw the cell on an image for performance reasons
                     for (l = 0; l < CELL_SIZE_CEIL; l++) {
@@ -304,8 +304,8 @@
                             pxIdx = ((pxX | pxX) + (pxY | pxY) * VIEW_SIZE) * 4;
 
                             fdBuffer.data[pxIdx    ] = r;
-                            fdBuffer.data[pxIdx + 1] = ((options.blackAndWhite) ? r : g);
-                            fdBuffer.data[pxIdx + 2] = ((options.blackAndWhite) ? r : b);
+                            fdBuffer.data[pxIdx + 1] = g;
+                            fdBuffer.data[pxIdx + 2] = b;
                             fdBuffer.data[pxIdx + 3] = 255;
                         }
                     }
@@ -383,7 +383,7 @@
         // lastTime is now
         lastTime = Date.now();
 
-        //requestAnimationFrame(update);
+        requestAnimationFrame(update);
 
     } // End update()
 

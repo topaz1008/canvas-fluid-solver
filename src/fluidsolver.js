@@ -107,10 +107,10 @@
         this.addSource(this.d, this.dOld);
 
         this.swapD();
-        this.diffuse(0, this.d, this.dOld, this.diffusion);
+        this.diffuse(FluidSolver.BOUNDARY_NONE, this.d, this.dOld, this.diffusion);
 
         this.swapD();
-        this.advect(0, this.d, this.dOld, this.u, this.v);
+        this.advect(FluidSolver.BOUNDARY_NONE, this.d, this.dOld, this.u, this.v);
 
         // Reset for next step
         for (i = 0; i < this.numOfCells; i++) {
