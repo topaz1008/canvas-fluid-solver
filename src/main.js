@@ -7,12 +7,10 @@
     'use strict';
 
     var NUM_OF_CELLS = 128, // Number of cells (not including the boundary)
-        VIEW_SIZE = 640,    // View size (square)
-        FPS = 60;           // Frames per second
+        VIEW_SIZE = 640;    // View size (square)
 
     // Check if we're on a mobile device
     var isMobile = /mobile/i.test(window.navigator.userAgent);
-
     if (isMobile) {
         // Lower settings if we're on mobile
         NUM_OF_CELLS = 64;
@@ -190,59 +188,6 @@
     } // End onMouseMove()
 
     /**
-     * Touch listeners.
-     *
-     * preventDefault() prevents the mouse events from being dispatched.
-     */
-    function onTouchStart(event) { event.preventDefault(); isMouseDown = true; }
-    function onTouchEnd(event) { event.preventDefault(); isMouseDown = false; }
-
-    /**
-     * Touch move listener.
-     * just passes the call to onMouseMove with the correct coordinates.
-     *
-     * @param event {*} The TouchEvent
-     */
-    function onTouchMove(event) {
-        event.preventDefault();
-
-        //noinspection JSUnresolvedVariable
-        var touches = event.touches;
-        if (touches && touches.length > 0) {
-            onMouseMove({
-                // Offset by the layer's (canvas) position.
-                offsetX: touches[0].screenX + event.layerX,
-                offsetY: touches[0].screenY + event.layerY - 50 // 50px top margin
-            });
-        }
-    }
-
-    /**
-     * Draw the simulation grid.
-     */
-    function drawGrid() {
-        var i;
-
-        context.lineWidth = 1;
-        context.strokeStyle = 'rgb(255, 255, 255)';
-        context.beginPath();
-
-        // Vertical
-        for (i = 0; i <= VIEW_SIZE; i += CELL_SIZE_CEIL) {
-            context.moveTo(i, 0);
-            context.lineTo(i, VIEW_SIZE);
-        }
-
-        // Horizontal
-        for (i = 0; i <= VIEW_SIZE; i += CELL_SIZE_CEIL) {
-            context.moveTo(0, i);
-            context.lineTo(VIEW_SIZE, i);
-        }
-
-        context.stroke();
-    }
-
-    /**
      * Update loop
      */
     function update(/*time*/) {
@@ -388,12 +333,40 @@
     } // End update()
 
     /**
+     * Touch listeners.
+     *
+     * preventDefault() prevents the mouse events from being dispatched.
+     */
+    function onTouchStart(event) { event.preventDefault(); isMouseDown = true; }
+    function onTouchEnd(event) { event.preventDefault(); isMouseDown = false; }
+
+    /**
+     * Touch move listener.
+     * just passes the call to onMouseMove with the correct coordinates.
+     *
+     * @param event {*} The TouchEvent
+     */
+    function onTouchMove(event) {
+        event.preventDefault();
+
+        //noinspection JSUnresolvedVariable
+        var touches = event.touches;
+        if (touches && touches.length > 0) {
+            onMouseMove({
+                // Offset by the layer's (canvas) position.
+                offsetX: touches[0].screenX + event.layerX,
+                offsetY: touches[0].screenY + event.layerY - 50 // 50px top margin
+            });
+        }
+    }
+
+    /**
      * @param min {Number}
      * @param max {Number}
      * @returns {Number}
      */
     function getRandom(min, max) {
-        return min + Math.random() * ((max + 1) - min);
+        return min + Math.random() * (max - min);
     }
 
     /**
@@ -406,6 +379,31 @@
         for (i = 0; i < length; i++) {
             image.data[i] = 0;
         }
+    }
+
+    /**
+     * Draw the simulation grid.
+     */
+    function drawGrid() {
+        var i;
+
+        context.lineWidth = 1;
+        context.strokeStyle = 'rgb(255, 255, 255)';
+        context.beginPath();
+
+        // Vertical
+        for (i = 0; i <= VIEW_SIZE; i += CELL_SIZE_CEIL) {
+            context.moveTo(i, 0);
+            context.lineTo(i, VIEW_SIZE);
+        }
+
+        // Horizontal
+        for (i = 0; i <= VIEW_SIZE; i += CELL_SIZE_CEIL) {
+            context.moveTo(0, i);
+            context.lineTo(VIEW_SIZE, i);
+        }
+
+        context.stroke();
     }
 
 })(window, document);
