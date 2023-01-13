@@ -1,0 +1,15 @@
+{
+    "name": "canvas-fluid-solver",
+    "version": "1.0.0",
+    "description": "HTML5 Canvas Fluid Solver",
+    "license": "MIT",
+    "type": "module",
+    "author": {
+        "name": "Topaz Bar",
+        "email": "topaz1008@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/topaz1008/canvas-fluid-solver.git"
+    }
+}
