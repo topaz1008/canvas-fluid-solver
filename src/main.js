@@ -81,7 +81,7 @@ gui.add(options, 'resetParticles').name('Reset Particles');
 canvas.width = canvas.height = VIEW_SIZE;       // View size
 context.lineWidth = 1;                          // Velocity field line width
 context.strokeStyle = 'rgb(192, 0, 0)';         // Velocity field color
-//context.globalCompositeOperation = 'screen';  // Blend mode
+context.globalCompositeOperation = 'screen';  // Blend mode
 
 // Disable smoothing when using floating point pixel values
 context.imageSmoothingEnabled = false;
@@ -157,8 +157,6 @@ function onMouseMove(event) {
  * Update loop
  */
 function update(/*time*/) {
-    // var i, j, k, l, m, dx, dy, color, cellIndex, deltaTime,
-    //     r, g, b, u, v, density, pxIdx, pxX, pxY;
     const invMaxColor = 1.0 / 255;
 
     const deltaTime = (Date.now() - lastTime) / 1000;
