@@ -31,3 +31,8 @@ Running
 ---------
 
 Just open `index.html` in your browser or see the live demo [HERE](https://topaz1008.github.io/canvas-fluid-solver).
+
+Wishlist
+---------
+* Add internal grid boundaries.
+* Maybe think about considering thinking about a 3D implementation ;)
