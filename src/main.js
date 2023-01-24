@@ -62,6 +62,7 @@ const gui = new dat.GUI({
     autoPlace: false
 });
 
+//<editor-fold desc="Add GUI Controls">
 gui.add(fs, 'dt', 0.05, 0.5).step(0.01).name('Time Step');
 gui.add(fs, 'iterations', 5, 40).step(1).name('Solver Iterations');
 gui.add(fs, 'diffusion', 0.0, 0.001).step(0.0001).name('Diffusion');
@@ -77,6 +78,7 @@ gui.add(options, 'drawParticles').name('Draw Particle Effect');
 gui.add(fs, 'resetVelocity').name('Reset Velocity');
 gui.add(fs, 'resetDensity').name('Reset Density');
 gui.add(options, 'resetParticles').name('Reset Particles');
+//</editor-fold>
 
 // Attach gui to dom
 document.getElementById('gui-container').appendChild(gui.domElement);
@@ -106,6 +108,21 @@ if (isMobile) {
     canvas.addEventListener('touchleave', onTouchEnd, false);
     canvas.addEventListener('touchcancel', onTouchEnd, false);
     canvas.addEventListener('touchmove', onTouchMove, false);
+
+    // Dom stuff for mobile.
+    const mainContainer = document.querySelector('#main-grid');
+    mainContainer.classList.remove('t1008-grid');
+    mainContainer.classList.add('container-fluid');
+
+    const guiContainer = document.querySelector('.dg.main');
+    guiContainer.classList.add('inherit-width');
+
+    const canvasContainer = document.querySelector('#canvas-container');
+    canvasContainer.classList.add('mobile');
+
+    const closeButton = document.querySelector('div.close-button');
+    console.log(closeButton);
+    closeButton.classList.add('mobile');
 }
 
 /**
@@ -185,14 +202,11 @@ function onTouchEnd(e) { e.preventDefault(); isMouseDown = false; }
 function onTouchMove(e) {
     e.preventDefault();
 
-    //noinspection JSUnresolvedVariable
     const touches = e.touches;
     if (touches && touches.length > 0) {
-        // Offset by the layer's (canvas) position.
-        const x = touches[0].screenX;
-        const y = touches[0].screenY;
-        console.log(`onTouchMove: x: ${x} y: ${y}`);
-        console.log(touches[0]);
+        // console.log(touches[0]);
+        const x = touches[0].clientX - 100 ;
+        const y = touches[0].clientY - VIEW_SIZE - 50;
         onMouseMove({ offsetX: x, offsetY: y });
     }
 }

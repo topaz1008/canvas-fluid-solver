@@ -28,6 +28,10 @@ canvas {
     border: 1px solid #fff;
 }
 
+.inherit-width{
+    width: inherit !important;
+}
+
 .t1008-grid {
     max-width: var(--max-width);
     display: grid;
@@ -46,6 +50,10 @@ canvas {
     text-align: center;
 }
 
+#canvas-container.mobile {
+    margin-top: 30px;
+}
+
 #main-canvas {
     background-color: #000;
 }
@@ -56,6 +64,10 @@ details p {
 
 /* dat.gui overrides over pico.css */
 /* Extremely ugly I know, but dat.gui has all of its css hard coded into the js file and it doesnt play nice with pico.css */
+.close-button.mobile {
+    width: 100% !important;
+}
+
 li.cr {
     margin-bottom: inherit !important;
 }
