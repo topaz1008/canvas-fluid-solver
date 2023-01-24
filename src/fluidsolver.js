@@ -2,15 +2,10 @@
  * A Simple fluid solver implementation in javascript.
  *
  * Largely based on Jos Stam's paper "Real-Time Fluid Dynamics for Games".
- * @link http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf
+ * @link https://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf
  *
  * Simulates the Navier–Stokes equations for incompressible fluids.
- * @link http://en.wikipedia.org/wiki/Navier-Stokes_equations
- *
- * Other implementations I've looked at while making this.
- * @link http://www.multires.caltech.edu/teaching/demos/java/stablefluids.htm
- * @link http://blog.inspirit.ru/fluidsolver-as3-port-of-msafluid/
- * @link http://http.developer.nvidia.com/GPUGems/gpugems_ch38.html
+ * @link https://en.wikipedia.org/wiki/Navier-Stokes_equations
  *
  * @author Topaz Bar <topaz1008@gmail.com>
  */
