@@ -55,7 +55,7 @@ const options = {
 
 // Set up the gui
 const gui = new dat.GUI({
-    width: 360,
+    width: 400,
     autoPlace: false
 });
 
@@ -75,6 +75,7 @@ gui.add(fs, 'resetVelocity').name('Reset Velocity');
 gui.add(fs, 'resetDensity').name('Reset Density');
 gui.add(options, 'resetParticles').name('Reset Particles');
 
+// Attach gui to dom
 document.getElementById('gui-container').appendChild(gui.domElement);
 
 // Set render states
