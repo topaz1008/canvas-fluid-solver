@@ -52,7 +52,7 @@ const options = {
     drawVelocityField: false,
     drawDensityField: true,
     drawParticles: false,
-    grayscale: true,
+    grayscale: false,
     resetParticles: function () { particles.length = 0; }
 };
 
