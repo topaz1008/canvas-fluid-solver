@@ -24,8 +24,8 @@ If the original paper even goes offline I have a copy of it [here](https://githu
 Other implementations I've looked at while making this. (these links are very old and are dead and/or insecure so proceed at you own risk)
 
 * [http://www.multires.caltech.edu/teaching/demos/java/stablefluids.htm](http://www.multires.caltech.edu/teaching/demos/java/stablefluids.htm)
-* ~~[http://blog.inspirit.ru/fluidsolver-as3-port-of-msafluid/](http://blog.inspirit.ru/fluidsolver-as3-port-of-msafluid/)~~
-* ~~[http://http.developer.nvidia.com/GPUGems/gpugems_ch38.html](http://http.developer.nvidia.com/GPUGems/gpugems_ch38.html)~~
+* ~~http://blog.inspirit.ru/fluidsolver-as3-port-of-msafluid/~~
+* ~~http://http.developer.nvidia.com/GPUGems/gpugems_ch38.html~~
 
 Running
 ---------
