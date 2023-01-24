@@ -111,11 +111,11 @@ if (isMobile) {
 /**
  * Main mouse move listener
  *
- * @param event {MouseEvent|Object}
+ * @param e {MouseEvent|Object}
  */
-function onMouseMove(event) {
-    const mouseX = event.offsetX,
-        mouseY = event.offsetY;
+function onMouseMove(e) {
+    const mouseX = e.offsetX,
+        mouseY = e.offsetY;
 
     // console.log(`onMouseMove: x: ${mouseX} y: ${mouseY}`);
 
@@ -173,28 +173,31 @@ function onMouseMove(event) {
  *
  * preventDefault() prevents the mouse events from being dispatched.
  */
-function onTouchStart(event) { event.preventDefault(); isMouseDown = true; }
-function onTouchEnd(event) { event.preventDefault(); isMouseDown = false; }
+function onTouchStart(e) { e.preventDefault(); isMouseDown = true; }
+function onTouchEnd(e) { e.preventDefault(); isMouseDown = false; }
 
 /**
  * Touch move listener.
  * just passes the call to onMouseMove with the correct coordinates.
  *
- * @param event {*} The TouchEvent
+ * @param e {*} The TouchEvent
  */
-function onTouchMove(event) {
-    event.preventDefault();
+function onTouchMove(e) {
+    e.preventDefault();
 
     //noinspection JSUnresolvedVariable
-    const touches = event.touches;
+    const touches = e.touches;
     if (touches && touches.length > 0) {
         // Offset by the layer's (canvas) position.
         const x = touches[0].screenX;
         const y = touches[0].screenY;
         console.log(`onTouchMove: x: ${x} y: ${y}`);
+        console.log(touches[0]);
         onMouseMove({ offsetX: x, offsetY: y });
     }
 }
+
+//// End event listeners
 
 /**
  * Update loop
