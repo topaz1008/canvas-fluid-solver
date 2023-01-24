@@ -38,6 +38,10 @@ canvas {
     grid-template-areas: '. .' '. .';
 }
 
+.strike {
+    text-decoration: line-through;
+}
+
 #canvas-container {
     text-align: center;
 }
