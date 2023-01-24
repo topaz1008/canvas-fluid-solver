@@ -1,0 +1,100 @@
+:root {
+    --max-width: 1280px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    padding-left: 15px;
+    padding-top: 0;
+}
+
+header {
+    max-width: var(--max-width);
+    margin: 50px auto auto auto;
+}
+
+header, main {
+    padding: 0 !important;
+}
+
+canvas {
+    margin: 0 0 0 15%;
+    padding: 0;
+    cursor: default;
+    display: block;
+    border: 1px solid #fff;
+}
+
+.t1008-grid {
+    max-width: var(--max-width);
+    display: grid;
+    grid-template-columns: 0.5fr 1.5fr;
+    grid-template-rows: 1.6fr 0.4fr;
+    gap: 0 0;
+    grid-auto-flow: row;
+    grid-template-areas: '. .' '. .';
+}
+
+#canvas-container {
+    text-align: center;
+}
+
+#main-canvas {
+    background-color: #000;
+}
+
+details p {
+    margin-bottom: 10px;
+}
+
+/* dat.gui overrides over pico.css */
+/* Extremely ugly I know, but dat.gui has all of its css hard coded into the js file and it doesnt play nice with pico.css */
+li.cr {
+    margin-bottom: inherit !important;
+}
+
+.dg ul, ul li {
+    list-style: none !important;
+}
+
+input[type=text] {
+    height: inherit !important;
+    border: inherit !important;
+    border-radius: inherit !important;
+    outline: inherit !important;
+    background-color: inherit !important;
+    box-shadow: inherit !important;
+    color: inherit !important;
+    font-weight: inherit !important;
+    transition: none !important;
+    margin: inherit !important;
+}
+
+input[type=checkbox] {
+    border-radius: inherit !important;
+    outline: inherit !important;
+    background-color: inherit !important;
+    box-shadow: inherit !important;
+    color: inherit !important;
+    font-weight: inherit !important;
+    transition: none !important;
+    margin: 0 !important;
+    margin-left: 10px !important;
+}
+
+select {
+    color: inherit !important;
+    border-radius: inherit !important;
+    outline: inherit !important;
+    font-weight: inherit !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 15px !important;
+}
+
+div.dg.main, div.dg.main > ul, div.dg.main input {
+    font-size: 16px !important;
+}

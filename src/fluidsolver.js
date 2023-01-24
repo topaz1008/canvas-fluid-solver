@@ -28,7 +28,7 @@ export class FluidSolver {
     constructor(n) {
         this.n = n;
 
-        this.dt = 0.1; // The simulation time-step
+        this.dt = 0.23; // The simulation time-step
         this.diffusion = 0.0002; // The amount of diffusion
         this.viscosity = 0; // The fluid's viscosity
 

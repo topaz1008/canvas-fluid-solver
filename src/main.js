@@ -30,7 +30,7 @@ class Particle {
 }
 
 // Globals
-const canvas = document.getElementById('main'),
+const canvas = document.getElementById('main-canvas'),
     context = canvas.getContext('2d');
 
 // Create the fluid solver
@@ -48,17 +48,17 @@ let lastTime = Date.now(),
     particles = [];
 
 const options = {
-    drawVelocityField: true,
+    drawVelocityField: false,
     drawDensityField: true,
-    drawParticles: true,
-    grayscale: false,
+    drawParticles: false,
+    grayscale: true,
     resetParticles: function () { particles.length = 0; }
 };
 
 // Set up the gui
 const gui = new dat.GUI({
-    width: 350,
-    autoPlace: true
+    width: 360,
+    autoPlace: false
 });
 
 gui.add(fs, 'dt', 0.05, 0.5).step(0.01).name('Time Step');
@@ -77,11 +77,13 @@ gui.add(fs, 'resetVelocity').name('Reset Velocity');
 gui.add(fs, 'resetDensity').name('Reset Density');
 gui.add(options, 'resetParticles').name('Reset Particles');
 
+document.getElementById('gui-container').appendChild(gui.domElement);
+
 // Set render states
 canvas.width = canvas.height = VIEW_SIZE;       // View size
 context.lineWidth = 1;                          // Velocity field line width
 context.strokeStyle = 'rgb(192, 0, 0)';         // Velocity field color
-context.globalCompositeOperation = 'screen';  // Blend mode
+// context.globalCompositeOperation = 'screen';  // Blend mode
 
 // Disable smoothing when using floating point pixel values
 context.imageSmoothingEnabled = false;
@@ -172,7 +174,7 @@ function update(/*time*/) {
     context.putImageData(fdBuffer, 0, 0);
     clearImageData(fdBuffer);
 
-    //drawGrid();
+    // drawGrid();
 
     if (options.drawVelocityField) {
         // Call once per frame
@@ -313,7 +315,12 @@ function getRandom(min, max) {
  */
 function clearImageData(image) {
     for (let i = 0; i < image.data.length; i++) {
-        image.data[i] = 0;
+        if ((i % 4) === 0) {
+            image.data[i] = 255;
+
+        } else {
+            image.data[i] = 0;
+        }
     }
 }
 

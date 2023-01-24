@@ -1,28 +1,48 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HTML5 Canvas Fluid Simulation</title>
-    <style>
-        body { margin: 0; background: #000; color: #fff; }
-        a, a:active, a:visited { color: #666 ; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .container { padding-left: 15px; padding-top: 0; }
-        #main { border: 1px solid #fff; cursor: default; margin: 50px auto auto auto; display: block; }
-    </style>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+    <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
 
-<div class="container">
+<header>
     <h2>A Simple fluid simulation</h2>
-    <p>Based on Jos Stam's paper <a href="http://www.dgp.toronto.edu/people/stam/reality/Research/pdf/GDC03.pdf" target="_blank">Real-Time Fluid Dynamics for Games</a>.</p>
-    <p>Simulates the <a href="http://en.wikipedia.org/wiki/Navier-Stokes_equations" target="_blank">Navier-Stokes equations</a> for incompressible fluids.</p>
-    <p>Move the mouse over the canvas to move the fluid, click and drag to add density (touch and drag on mobile).</p>
-</div>
+    <details open>
+        <summary>About</summary>
+        <p>Move the mouse over the canvas to move the fluid (inside the white border), click and drag to add density (touch and drag on mobile).</p>
+        <p>You can change the simulation parameters in real-time using the gui on the left.</p>
+        &nbsp;
+        <p>Based on Jos Stam's paper <a href="https://www.dgp.toronto.edu/public_user/stam/reality/Research/pdf/GDC03.pdf" target="_blank">Real-Time Fluid Dynamics for Games</a>.</p>
+        <p>Simulates the <a href="https://en.wikipedia.org/wiki/Navier-Stokes_equations" target="_blank">Navier-Stokes equations</a> for incompressible fluids.</p>
+    </details>
+    <details>
+        <summary>Source Code</summary>
+        <p>Can be found on my <a href="https://github.com/topaz1008/canvas-fluid-solver/" target="_blank">Github</a>.</p>
+    </details>
+    <details>
+        <summary>Credits</summary>
+        <p>The demo uses <a href="https://github.com/dataarts/dat.gui">dat.gui</a> for the GUI</p>
+        <p>I've looked at other implementations while making this, but the links are very old and are now dead and/or insecure.</p>
+        <p>The best reference is the original paper which is still online and contains a very clear explanation of the solver and methods it uses. It also contains a complete C implementation of the solver.</p>
+    </details>
+</header>
 
-<canvas id="main"></canvas>
+<main class="t1008-grid">
+
+    <div id="gui-container">
+        <!-- dat.gui container -->
+    </div>
+
+    <div id="canvas-container">
+        <canvas id="main-canvas"></canvas>
+    </div>
+
+</main>
 
 <script src="vendors/dat.gui.min.js"></script>
 <script src="src/main.js" type="module"></script>
