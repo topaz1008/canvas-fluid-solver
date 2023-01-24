@@ -17,7 +17,7 @@ The code is commented as best I could where ever I felt it was necessary.
 
 The best reference is the original paper which is still online and contains a very clear explanation of the solver and methods it uses. It also contains a complete C implementation of the solver.
 
-If the original paper even goes offline I have a copy of it [here](https://github.com/topaz1008/canvas-fluid-solver/blob/master/doc/GDC03.pdf).
+If the original paper ever goes offline I have a copy of it [here](https://github.com/topaz1008/canvas-fluid-solver/blob/master/doc/GDC03.pdf).
 
 Other implementations I've looked at while making this. (these links are very old and are dead and/or insecure so proceed at you own risk)
 
