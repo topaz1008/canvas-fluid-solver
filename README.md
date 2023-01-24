@@ -15,8 +15,6 @@ The density field is rendered on an off-screen bitmap and blit'ed to the canvas 
 
 The code is commented as best I could where ever I felt it was necessary.
 
-If you want to understand this code I suggest you read the original paper (You will need a good background in math and physics).
-
 The best reference is the original paper which is still online and contains a very clear explanation of the solver and methods it uses. It also contains a complete C implementation of the solver.
 
 If the original paper even goes offline I have a copy of it [here](https://github.com/topaz1008/canvas-fluid-solver/blob/master/doc/GDC03.pdf).
