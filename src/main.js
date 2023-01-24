@@ -11,8 +11,6 @@ const NUM_OF_CELLS = 128, // Number of cells (not including the boundary)
 const CELL_SIZE = VIEW_SIZE / NUM_OF_CELLS,  // Size of each cell in pixels
     CELL_SIZE_CEIL = Math.ceil(CELL_SIZE); // Size of each cell in pixels (ceiling)
 
-requestAnimationFrame(update);
-
 /**
  * A simple particle class.
  */
@@ -42,7 +40,7 @@ const fdBuffer = context.createImageData(VIEW_SIZE, VIEW_SIZE);
 
 // Demo app variables
 let lastTime = Date.now(),
-    isMouseDown = false,
+    isMouseDown = true,
     oldMouseX = 0,
     oldMouseY = 0,
     particles = [];
@@ -114,8 +112,8 @@ function onMouseMove(event) {
     if (i > NUM_OF_CELLS || i < 1 || j > NUM_OF_CELLS || j < 1) return;
 
     // Mouse velocity
-    const du = (mouseX - oldMouseX) * 1.5,
-        dv = (mouseY - oldMouseY) * 1.5;
+    const du = (mouseX - oldMouseX) * 0.5,
+        dv = (mouseY - oldMouseY) * 0.5;
 
     // Add the mouse velocity to cells above, below, to the left, and to the right as well.
     fs.uOld[fs.I(i, j)] = du;
@@ -135,7 +133,7 @@ function onMouseMove(event) {
 
     if (isMouseDown) {
         // If holding down the mouse, add density to the cell below the mouse
-        fs.dOld[fs.I(i, j)] = 50;
+        fs.dOld[fs.I(i, j)] = 150;
     }
 
     if (isMouseDown && options.drawParticles) {
@@ -298,6 +296,9 @@ function update(/*time*/) {
     requestAnimationFrame(update);
 
 } // End update()
+
+// Start app
+update();
 
 /**
  * @param min {Number}
