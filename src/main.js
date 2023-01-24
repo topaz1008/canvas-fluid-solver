@@ -11,6 +11,9 @@ const NUM_OF_CELLS = 128, // Number of cells (not including the boundary)
 const CELL_SIZE = VIEW_SIZE / NUM_OF_CELLS,  // Size of each cell in pixels
     CELL_SIZE_CEIL = Math.ceil(CELL_SIZE); // Size of each cell in pixels (ceiling)
 
+const isMobile = window.navigator.userAgentData.mobile;
+console.log(`isMobile: ${isMobile}`);
+
 /**
  * A simple particle class.
  */
@@ -62,7 +65,7 @@ const gui = new dat.GUI({
 gui.add(fs, 'dt', 0.05, 0.5).step(0.01).name('Time Step');
 gui.add(fs, 'iterations', 5, 40).step(1).name('Solver Iterations');
 gui.add(fs, 'diffusion', 0.0, 0.001).step(0.0001).name('Diffusion');
-gui.add(fs, 'viscosity', { None: 0.0, Low: 0.0002, High: 0.001 }).name('Viscosity');
+gui.add(fs, 'viscosity', { None: 0.0, 'Very Low': 0.0003, Low: 0.0002, High: 0.001 }).name('Viscosity');
 gui.add(fs, 'doVorticityConfinement').name('Vorticity Confinement');
 gui.add(fs, 'doBuoyancy').name('Buoyancy');
 
@@ -96,6 +99,15 @@ document.addEventListener('mousedown', () => { isMouseDown = true; }, false);
 // Mouse move listener (on the canvas element)
 canvas.addEventListener('mousemove', onMouseMove, false);
 
+// Touch listeners (on the canvas element)
+if (isMobile) {
+    canvas.addEventListener('touchstart', onTouchStart, false);
+    canvas.addEventListener('touchend', onTouchEnd, false);
+    canvas.addEventListener('touchleave', onTouchEnd, false);
+    canvas.addEventListener('touchcancel', onTouchEnd, false);
+    canvas.addEventListener('touchmove', onTouchMove, false);
+}
+
 /**
  * Main mouse move listener
  *
@@ -104,6 +116,8 @@ canvas.addEventListener('mousemove', onMouseMove, false);
 function onMouseMove(event) {
     const mouseX = event.offsetX,
         mouseY = event.offsetY;
+
+    // console.log(`onMouseMove: x: ${mouseX} y: ${mouseY}`);
 
     // Find the cell below the mouse
     const i = (mouseX / VIEW_SIZE) * NUM_OF_CELLS + 1,
@@ -153,6 +167,34 @@ function onMouseMove(event) {
     oldMouseY = mouseY;
 
 } // End onMouseMove()
+
+/**
+ * Touch listeners.
+ *
+ * preventDefault() prevents the mouse events from being dispatched.
+ */
+function onTouchStart(event) { event.preventDefault(); isMouseDown = true; }
+function onTouchEnd(event) { event.preventDefault(); isMouseDown = false; }
+
+/**
+ * Touch move listener.
+ * just passes the call to onMouseMove with the correct coordinates.
+ *
+ * @param event {*} The TouchEvent
+ */
+function onTouchMove(event) {
+    event.preventDefault();
+
+    //noinspection JSUnresolvedVariable
+    const touches = event.touches;
+    if (touches && touches.length > 0) {
+        // Offset by the layer's (canvas) position.
+        const x = touches[0].screenX;
+        const y = touches[0].screenY;
+        console.log(`onTouchMove: x: ${x} y: ${y}`);
+        onMouseMove({ offsetX: x, offsetY: y });
+    }
+}
 
 /**
  * Update loop

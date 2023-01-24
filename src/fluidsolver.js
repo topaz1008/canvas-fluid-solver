@@ -24,11 +24,11 @@ export class FluidSolver {
         this.n = n;
 
         this.dt = 0.23; // The simulation time-step
-        this.diffusion = 0.0003; // The amount of diffusion
+        this.diffusion = 0.0004; // The amount of diffusion
         this.viscosity = 0; // The fluid's viscosity
 
         // Number of iterations to use in the Gauss-Seidel method in linearSolve()
-        this.iterations = 10;
+        this.iterations = 15;
 
         this.doVorticityConfinement = true;
         this.doBuoyancy = true;
