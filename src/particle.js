@@ -1,5 +1,7 @@
 /**
  * A simple particle class.
+ *
+ * @author Topaz Bar <topaz1008@gmail.com>
  */
 export class Particle {
     static TIME_TO_LIVE = 5; // Time to live in seconds

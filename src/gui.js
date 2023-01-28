@@ -1,3 +1,9 @@
+/**
+ * A simple wrapper around lil-gui
+ * just to keep all this boilerplate stuff out of the main file.
+ *
+ * @author Topaz Bar <topaz1008@gmail.com>
+ */
 export class AppGUI {
     static CONTAINER_ELEMENT_ID = 'gui-container';
 

@@ -36,7 +36,8 @@ let lastTime = Date.now(),
     oldMouseY = 0,
     particles = [];
 
-const options = {
+// App options object for the gui
+const appOptions = {
     fluidSolver: fs,
     drawVelocityField: false,
     drawDensityField: true,
@@ -48,7 +49,7 @@ const options = {
 };
 
 // Set up the gui
-const gui = new AppGUI(GUI, { width: 400, autoPlace: false }, options);
+const gui = new AppGUI(GUI, { width: 400, autoPlace: false }, appOptions);
 gui.init();
 
 // Set render states
@@ -74,20 +75,14 @@ if (isMobile) {
     canvas.addEventListener('touchcancel', onTouchEnd, false);
     canvas.addEventListener('touchmove', onTouchMove, false);
 
-    // Dom stuff for mobile. (should probably replace this with media queries)
+    // Dom stuff for mobile.
+    // FIXME: should probably replace this with media queries
     const mainContainer = document.querySelector('#main-grid');
     mainContainer.classList.remove('t1008-grid');
     mainContainer.classList.add('container-fluid');
 
-    const guiContainer = document.querySelector('.dg.main');
-    guiContainer.classList.add('inherit-width');
-
     const canvasContainer = document.querySelector('#canvas-container');
     canvasContainer.classList.add('mobile');
-
-    const closeButton = document.querySelector('div.close-button');
-    console.log(closeButton);
-    closeButton.classList.add('mobile');
 }
 //</editor-fold>
 
@@ -132,7 +127,7 @@ function onMouseMove(e) {
         fs.dOld[fs.I(i, j)] = 150;
     }
 
-    if (isMouseDown && options.drawParticles) {
+    if (isMouseDown && appOptions.drawParticles) {
         // Add particles
         for (let k = 0; k < 5; k++) {
             const p = new Particle(mouseX + getRandom(-50, 50), mouseY + getRandom(-50, 50));
@@ -198,7 +193,7 @@ function update(/*time*/) {
 
     // drawGrid();
 
-    if (options.drawVelocityField) {
+    if (appOptions.drawVelocityField) {
         // Call once per frame
         context.lineWidth = 1;
         context.strokeStyle = 'rgb(192, 0, 0)';
@@ -218,7 +213,7 @@ function update(/*time*/) {
 
             // Draw density
             const density = fs.d[cellIndex];
-            if (options.drawDensityField && density > 0) {
+            if (appOptions.drawDensityField && density > 0) {
                 const color = density * 255;
 
                 // fdBuffer.data is actually a Uint8ClampedArray so there is no need to manually clamp color values
@@ -226,8 +221,8 @@ function update(/*time*/) {
                 //if (color > 255) color = 255;
 
                 const r = color;
-                const g = ((options.grayscale) ? color : color * dx * invMaxColor);
-                const b = ((options.grayscale) ? color : color * dy * invMaxColor);
+                const g = ((appOptions.grayscale) ? color : color * dx * invMaxColor);
+                const b = ((appOptions.grayscale) ? color : color * dy * invMaxColor);
 
                 // Draw the cell on an image for performance reasons
                 for (let l = 0; l < CELL_SIZE_CEIL; l++) {
@@ -245,7 +240,7 @@ function update(/*time*/) {
             }
 
             // Draw velocity field ?
-            if (options.drawVelocityField && (i % 2) === 0 && (j % 2) === 0) {
+            if (appOptions.drawVelocityField && (i % 2) === 0 && (j % 2) === 0) {
                 const u = fs.u[cellIndex] * 150;
                 const v = fs.v[cellIndex] * 150;
 
@@ -257,7 +252,7 @@ function update(/*time*/) {
 
     } // End for all cells in the x direction
 
-    if (options.drawVelocityField) {
+    if (appOptions.drawVelocityField) {
         // Call once per frame
         context.stroke();
     }
@@ -265,7 +260,7 @@ function update(/*time*/) {
     // Update and render particles
     let lastAlpha = 0,
         particlesLength = particles.length;
-    if (options.drawParticles) {
+    if (appOptions.drawParticles) {
         context.lineWidth = 2;
         context.strokeStyle = 'rgb(255, 255, 255)';
         context.beginPath();
