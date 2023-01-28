@@ -5,7 +5,7 @@ A Simple fluid solver implementation in javascript.
 
 A live demo can be found [HERE](https://topaz1008.github.io/canvas-fluid-solver).
 
-The demo uses [dat.gui](https://github.com/dataarts/dat.gui) for the GUI (included in the `vendors` folder).
+The demo uses [lil-gui](https://github.com/georgealways/lil-gui) for the GUI.
 
 Simulates the [Navier–Stokes](https://en.wikipedia.org/wiki/Navier-Stokes_equations) equations for incompressible fluids.
 

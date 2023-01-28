@@ -11,5 +11,8 @@
     "repository": {
         "type": "git",
         "url": "git+https://github.com/topaz1008/canvas-fluid-solver.git"
+    },
+    "dependencies": {
+        "lil-gui": "^0.17.0"
     }
 }

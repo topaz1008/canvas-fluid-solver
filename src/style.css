@@ -28,7 +28,7 @@ canvas {
     border: 1px solid #fff;
 }
 
-.inherit-width{
+.inherit-width {
     width: inherit !important;
 }
 
@@ -62,55 +62,7 @@ details p {
     margin-bottom: 10px;
 }
 
-/* dat.gui overrides over pico.css */
-/* Extremely ugly I know, but dat.gui has all of its css hard coded into the js file and it doesnt play nice with pico.css */
-.close-button.mobile {
-    width: 100% !important;
-}
-
-li.cr {
-    margin-bottom: inherit !important;
-}
-
-.dg ul, ul li {
-    list-style: none !important;
-}
-
-input[type=text] {
+/* lil-gui overrides over pico.css */
+input:not([type=checkbox], [type=radio], [type=range]) {
     height: inherit !important;
-    border: inherit !important;
-    border-radius: inherit !important;
-    outline: inherit !important;
-    background-color: inherit !important;
-    box-shadow: inherit !important;
-    color: inherit !important;
-    font-weight: inherit !important;
-    transition: none !important;
-    margin: inherit !important;
-}
-
-input[type=checkbox] {
-    border-radius: inherit !important;
-    outline: inherit !important;
-    background-color: inherit !important;
-    box-shadow: inherit !important;
-    color: inherit !important;
-    font-weight: inherit !important;
-    transition: none !important;
-    margin: 0 !important;
-    margin-left: 10px !important;
-}
-
-select {
-    color: inherit !important;
-    border-radius: inherit !important;
-    outline: inherit !important;
-    font-weight: inherit !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    font-size: 15px !important;
-}
-
-div.dg.main, div.dg.main > ul, div.dg.main input {
-    font-size: 16px !important;
 }

@@ -3,6 +3,7 @@
  *
  * @author Topaz Bar <topaz1008@gmail.com>
  */
+import { GUI } from 'https://cdn.jsdelivr.net/npm/lil-gui@0.17/+esm';
 import { FluidSolver } from './fluidsolver.js';
 
 const NUM_OF_CELLS = 128, // Number of cells (not including the boundary)
@@ -11,6 +12,7 @@ const NUM_OF_CELLS = 128, // Number of cells (not including the boundary)
 const CELL_SIZE = VIEW_SIZE / NUM_OF_CELLS,  // Size of each cell in pixels
     CELL_SIZE_CEIL = Math.ceil(CELL_SIZE); // Size of each cell in pixels (ceiling)
 
+// noinspection JSUnresolvedVariable
 const isMobile = window.navigator.userAgentData.mobile;
 console.log(`isMobile: ${isMobile}`);
 
@@ -53,11 +55,11 @@ const options = {
     drawDensityField: true,
     drawParticles: false,
     grayscale: false,
-    resetParticles: function () { particles.length = 0; }
+    resetParticles: () => { particles.length = 0; }
 };
 
 // Set up the gui
-const gui = new dat.GUI({
+const gui = new GUI({
     width: 400,
     autoPlace: false
 });
@@ -66,7 +68,7 @@ const gui = new dat.GUI({
 gui.add(fs, 'dt', 0.05, 0.5).step(0.01).name('Time Step');
 gui.add(fs, 'iterations', 5, 40).step(1).name('Solver Iterations');
 gui.add(fs, 'diffusion', 0.0, 0.001).step(0.0001).name('Diffusion');
-gui.add(fs, 'viscosity', { None: 0.0, 'Very Low': 0.0003, Low: 0.0002, High: 0.001 }).name('Viscosity');
+gui.add(fs, 'viscosity', { None: 0.0, 'Very Low': 0.00001, Low: 0.0002, High: 0.001 }).name('Viscosity');
 gui.add(fs, 'doVorticityConfinement').name('Vorticity Confinement');
 gui.add(fs, 'doBuoyancy').name('Buoyancy');
 
@@ -81,7 +83,8 @@ gui.add(options, 'resetParticles').name('Reset Particles');
 //</editor-fold>
 
 // Attach gui to dom
-document.getElementById('gui-container').appendChild(gui.domElement);
+document.getElementById('gui-container')
+    .appendChild(gui.domElement);
 
 // Set render states
 canvas.width = canvas.height = VIEW_SIZE;       // View size
@@ -109,7 +112,7 @@ if (isMobile) {
     canvas.addEventListener('touchcancel', onTouchEnd, false);
     canvas.addEventListener('touchmove', onTouchMove, false);
 
-    // Dom stuff for mobile.
+    // Dom stuff for mobile. (should probably replace this with media queries)
     const mainContainer = document.querySelector('#main-grid');
     mainContainer.classList.remove('t1008-grid');
     mainContainer.classList.add('container-fluid');
@@ -147,7 +150,7 @@ function onMouseMove(e) {
     const du = (mouseX - oldMouseX) * 0.5,
         dv = (mouseY - oldMouseY) * 0.5;
 
-    // Add the mouse velocity to cells above, below, to the left, and to the right as well.
+    // Add the mouse velocity to cells above, below, to the left, and to the right.
     fs.uOld[fs.I(i, j)] = du;
     fs.vOld[fs.I(i, j)] = dv;
 
@@ -205,7 +208,7 @@ function onTouchMove(e) {
     const touches = e.touches;
     if (touches && touches.length > 0) {
         // console.log(touches[0]);
-        const x = touches[0].clientX - 100 ;
+        const x = touches[0].clientX - 100;
         const y = touches[0].clientY - VIEW_SIZE - 50;
         onMouseMove({ offsetX: x, offsetY: y });
     }
@@ -282,8 +285,8 @@ function update(/*time*/) {
 
             // Draw velocity field ?
             if (options.drawVelocityField && (i % 2) === 0 && (j % 2) === 0) {
-                const u = fs.u[cellIndex] * 50;
-                const v = fs.v[cellIndex] * 50;
+                const u = fs.u[cellIndex] * 150;
+                const v = fs.v[cellIndex] * 150;
 
                 context.moveTo(dx, dy);
                 context.lineTo(dx + u, dy + v);
@@ -328,9 +331,9 @@ function update(/*time*/) {
                 p.x += p.vx;
                 p.y += p.vy;
 
-                if (Math.abs(alpha - lastAlpha) > 0.001) {
+                if (Math.abs(alpha - lastAlpha) > 0.01) {
                     // Only change stroke style if the alpha changed to save on render state changes.
-                    context.strokeStyle = 'rgba(255, 255, 255, ' + alpha + ')';
+                    context.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
                     lastAlpha = alpha;
                 }
 

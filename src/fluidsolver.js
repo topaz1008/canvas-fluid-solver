@@ -388,7 +388,7 @@ export class FluidSolver {
         for (let i = 1; i <= this.n; i++) {
             for (let j = 1; j <= this.n; j++) {
                 u[this.I(i, j)] -= 0.5 * (p[this.I(i + 1, j)] - p[this.I(i - 1, j)]) / h;
-                v[this.I( i, j)] -= 0.5 * (p[this.I(i, j + 1)] - p[this.I( i, j - 1)]) / h;
+                v[this.I(i, j)] -= 0.5 * (p[this.I(i, j + 1)] - p[this.I(i, j - 1)]) / h;
             }
         }
 
@@ -428,7 +428,7 @@ export class FluidSolver {
      * @param x {Array<Number>}
      * @private
      */
-    #setBoundary (b, x) {
+    #setBoundary(b, x) {
         for (let i = 1; i <= this.n; i++) {
             x[this.I(0, i)] = (b === FluidSolver.BOUNDARY_LEFT_RIGHT) ?
                 -x[this.I(1, i)] : x[this.I(1, i)];
