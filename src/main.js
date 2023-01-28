@@ -345,7 +345,7 @@ function clearImageData(image) {
 }
 
 /**
- * Draw the simulation grid.
+ * Draw the simulation grid. (for debugging and development purposes)
  */
 function drawGrid() {
     context.lineWidth = 1;
