@@ -4,33 +4,19 @@
  * @author Topaz Bar <topaz1008@gmail.com>
  */
 import { GUI } from 'https://cdn.jsdelivr.net/npm/lil-gui@0.17/+esm';
+import { Particle } from './particle.js';
 import { FluidSolver } from './fluidsolver.js';
+import { AppGUI } from './gui.js';
 
 const NUM_OF_CELLS = 128, // Number of cells (not including the boundary)
-    VIEW_SIZE = 640;    // View size (square)
+    VIEW_SIZE = 640;      // View size (square)
 
-const CELL_SIZE = VIEW_SIZE / NUM_OF_CELLS,  // Size of each cell in pixels
+const CELL_SIZE = VIEW_SIZE / NUM_OF_CELLS,// Size of each cell in pixels
     CELL_SIZE_CEIL = Math.ceil(CELL_SIZE); // Size of each cell in pixels (ceiling)
 
 // noinspection JSUnresolvedVariable
 const isMobile = window.navigator.userAgentData.mobile;
 console.log(`isMobile: ${isMobile}`);
-
-/**
- * A simple particle class.
- */
-class Particle {
-    static TIME_TO_LIVE = 5; // Time to live in seconds
-
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.vx = 0;
-        this.vy = 0;
-        this.age = 0;
-        this.dead = false;
-    }
-}
 
 // Globals
 const canvas = document.getElementById('main-canvas'),
@@ -51,53 +37,29 @@ let lastTime = Date.now(),
     particles = [];
 
 const options = {
+    fluidSolver: fs,
     drawVelocityField: false,
     drawDensityField: true,
     drawParticles: false,
     grayscale: false,
-    resetParticles: () => { particles.length = 0; }
+    resetParticles: () => {
+        particles.length = 0;
+    }
 };
 
 // Set up the gui
-const gui = new GUI({
-    width: 400,
-    autoPlace: false
-});
-
-//<editor-fold desc="Add GUI Controls">
-gui.add(fs, 'dt', 0.05, 0.5).step(0.01).name('Time Step');
-gui.add(fs, 'iterations', 5, 40).step(1).name('Solver Iterations');
-gui.add(fs, 'diffusion', 0.0, 0.001).step(0.0001).name('Diffusion');
-gui.add(fs, 'viscosity', { None: 0.0, 'Very Low': 0.00001, Low: 0.0002, High: 0.001 }).name('Viscosity');
-gui.add(fs, 'doVorticityConfinement').name('Vorticity Confinement');
-gui.add(fs, 'doBuoyancy').name('Buoyancy');
-
-gui.add(options, 'grayscale').name('Grayscale');
-gui.add(options, 'drawVelocityField').name('Draw Velocity Field');
-gui.add(options, 'drawDensityField').name('Draw Density Field');
-gui.add(options, 'drawParticles').name('Draw Particle Effect');
-
-gui.add(fs, 'resetVelocity').name('Reset Velocity');
-gui.add(fs, 'resetDensity').name('Reset Density');
-gui.add(options, 'resetParticles').name('Reset Particles');
-//</editor-fold>
-
-// Attach gui to dom
-document.getElementById('gui-container')
-    .appendChild(gui.domElement);
+const gui = new AppGUI(GUI, { width: 400, autoPlace: false }, options);
+gui.init();
 
 // Set render states
-canvas.width = canvas.height = VIEW_SIZE;       // View size
-context.lineWidth = 1;                          // Velocity field line width
-context.strokeStyle = 'rgb(192, 0, 0)';         // Velocity field color
-// context.globalCompositeOperation = 'screen';  // Blend mode
+canvas.width = canvas.height = VIEW_SIZE; // View size
+context.lineWidth = 1;                    // Velocity field line width
+context.strokeStyle = 'rgb(192, 0, 0)';   // Velocity field color
 
 // Disable smoothing when using floating point pixel values
 context.imageSmoothingEnabled = false;
 
-/**
- * Add event listeners
- */
+//<editor-fold desc="Mouse and touch event listeners registration">
 document.addEventListener('mouseup', () => { isMouseDown = false; }, false);
 document.addEventListener('mousedown', () => { isMouseDown = true; }, false);
 
@@ -127,6 +89,7 @@ if (isMobile) {
     console.log(closeButton);
     closeButton.classList.add('mobile');
 }
+//</editor-fold>
 
 /**
  * Main mouse move listener
@@ -136,8 +99,6 @@ if (isMobile) {
 function onMouseMove(e) {
     const mouseX = e.offsetX,
         mouseY = e.offsetY;
-
-    // console.log(`onMouseMove: x: ${mouseX} y: ${mouseY}`);
 
     // Find the cell below the mouse
     const i = (mouseX / VIEW_SIZE) * NUM_OF_CELLS + 1,
